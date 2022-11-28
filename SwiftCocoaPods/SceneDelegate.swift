@@ -6,20 +6,63 @@
 //
 
 import UIKit
+import AdSupport
+import Singular
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var deeplinkData:[String:AnyObject]?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        print(Date(), "-- connectionOptions")
-        guard let _ = (scene as? UIWindowScene) else { return }
+        
+        if let userActivity = connectionOptions.userActivities.first, let config = self.getConfig() {
+            // Starts a new session when the user opens the app using a Singular Link while it was in the background
+            config.userActivity = userActivity
+            Singular.start(config)
+        }
+    }
+    
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+        // Starts a new session when the user opens the app using a Singular Link while it was in the background
+        if let config = self.getConfig() {
+            config.userActivity = userActivity
+            Singular.start(config)
+        }
+    }
+    
+    func getConfig() -> SingularConfig? {
+        guard let config = SingularConfig(apiKey: Constants.APIKEY, andSecret: Constants.SECRET) else {
+            return nil
+        }
+        config.singularLinksHandler = { params in
+            if let params = params {
+                self.handleSingularLink(params: params)
+            }
+        }
+        return config
     }
 
+    func handleSingularLink(params: SingularLinkParams) {
+        
+        var values = [String: AnyObject]()
+        values[Constants.DEEPLINK] = params.getDeepLink() as AnyObject
+        values[Constants.PASSTHROUGH] = params.getPassthrough() as AnyObject
+        values[Constants.IS_DEFERRED] = params.isDeferred() as AnyObject
+        
+        deeplinkData = values
+        
+        navigateToDeeplinkController()
+    }
+    
+    func navigateToDeeplinkController() {
+        // UI changes must run on main thread
+        print(Constants.DEEPLINK)
+    }
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

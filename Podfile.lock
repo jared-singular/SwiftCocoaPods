@@ -1,0 +1,18 @@
+PODS:
+  - Singular-SDK (12.0.0):
+    - Singular-SDK/Main (= 12.0.0)
+  - Singular-SDK/Main (12.0.0)
+
+DEPENDENCIES:
+  - Singular-SDK
+
+SPEC REPOS:
+  trunk:
+    - Singular-SDK
+
+SPEC CHECKSUMS:
+  Singular-SDK: 34cef2d5b414c42eac0fbb94a59fef40332d1acc
+
+PODFILE CHECKSUM: c06732280ad816558d252f28ac332d5a14887edb
+
+COCOAPODS: 1.11.3
