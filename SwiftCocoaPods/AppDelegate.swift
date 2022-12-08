@@ -7,49 +7,60 @@
 
 import UIKit
 import Singular
-import AdSupport
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        print(Date(),"-- didFinishLaunchingWithOptions()")
-        // Get Identifier for Vendor (IDFV)
-        print(Date(), "-- IDFV:",UIDevice().identifierForVendor!.uuidString)
+        print(Date(), "-- didFinishLaunchingWithOptions()")
         
-        // Add 3rd Party Code Here:
-        if let config = self.getConfig() {
-            config.launchOptions = launchOptions
-            Singular.start(config)
-        }
+        // Print Identifier for Vendor (IDFV)
+        print(Date(), "App Delegate IDFV:", UIDevice().identifierForVendor!.uuidString as Any)
+        
+        // Get 3rd Party Identifiers to set in Global Properties:
+        let thirdPartyKey = "anonymousID"
+        let thirdPartyID = "2ed20738-059d-42b5-ab80-5aa0c530e3e1"
+        
+        // Add Singular SDK Init Here:
+        //Initialize the Singular SDK
+        Singular.startSession(Constants.APIKEY, withKey: Constants.SECRET, withSingularLinkHandler: { params in
+            //if the app opens on a deep link, callback is triggered
+            //handle the values needed for the app
+            self.processDeeplink(params: params)
+        })
+        
+        // Request App Tracking Transparency when the App is Ready, provides IDFA on consent to Singular SDK
+        Utils.requestTrackingAuthorization()
         
         return true
     }
+    
+    func processDeeplink(params: SingularLinkParams!) {
+        print(Date(), "-- App Delegate processDeeplink()")
 
-    func getConfig() -> SingularConfig? {
-        guard let config = SingularConfig(apiKey: Constants.APIKEY, andSecret: Constants.SECRET) else {
-            return nil
+        // Get Deeplink data from Singular Link
+        let deeplink = params.getDeepLink()
+        let passthrough = params.getPassthrough()
+        let isDeferredDeeplink = params.isDeferred() ? "Yes" : "No"
+
+        // Store in UserDefaults for access from DeeplinkController
+        UserDefaults.standard.set(deeplink, forKey: Constants.DEEPLINK)
+        UserDefaults.standard.set(passthrough, forKey: Constants.PASSTHROUGH)
+        UserDefaults.standard.set(isDeferredDeeplink, forKey: Constants.IS_DEFERRED)
+        //UserDefaults.standard.set(openurlString, forKey: Constants.OPENURL)
+
+        // Handle to the DeeplinkController if deeplink exists
+        DispatchQueue.main.async {
+            if let tabBar = UIApplication.shared.windows.first?.rootViewController as? TabController {
+                tabBar.openedWithDeeplink()
+            }
+            
         }
-        // Enable use of SKAN for iOS14 tracking
-        // Singular will call registerAppForAdNetworkAttribution for you
-        // Invoking [Singular skanRegisterAppForAdNetworkAttribution] will set this value to YES, even if done before/after [Singular start]
-        config.skAdNetworkEnabled = true
-        
-        // Delay sending events for up to 3 minutes, or until Tracking is Authorized (only on iOS 14)
-        config.waitForTrackingAuthorizationWithTimeoutInterval = 180
-        
-        // Enable manual conversion value updates
-        // IMPORTANT: set as NO (or just don't set - it defaults to NO) to let Singular manage conversion values
-        config.manualSkanConversionManagement = false
-        config.conversionValueUpdatedCallback = { newConversionValue in
-            // Receive a callback whenever the Conversion Value is updated
-        }
-        
-        return config
+    
     }
-    
-    
+        
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {

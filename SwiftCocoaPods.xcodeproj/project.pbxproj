@@ -9,10 +9,16 @@
 /* Begin PBXBuildFile section */
 		7F002F1A293025FB0073C2A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F002F19293025FB0073C2A4 /* AppDelegate.swift */; };
 		7F002F1C293025FB0073C2A4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F002F1B293025FB0073C2A4 /* SceneDelegate.swift */; };
-		7F002F1E293025FB0073C2A4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F002F1D293025FB0073C2A4 /* ViewController.swift */; };
 		7F002F21293025FB0073C2A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F002F1F293025FB0073C2A4 /* Main.storyboard */; };
 		7F002F23293025FD0073C2A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F002F22293025FD0073C2A4 /* Assets.xcassets */; };
 		7F002F26293025FD0073C2A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F002F24293025FD0073C2A4 /* LaunchScreen.storyboard */; };
+		7F40D2B12941195400A69932 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F40D2B02941195400A69932 /* TabController.swift */; };
+		7F848C6F293FE84D001CB9A5 /* PrivacyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C6E293FE84D001CB9A5 /* PrivacyController.swift */; };
+		7F848C71293FE8C7001CB9A5 /* DeeplinkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C70293FE8C7001CB9A5 /* DeeplinkController.swift */; };
+		7F848C73293FE8D6001CB9A5 /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C72293FE8D6001CB9A5 /* EventsController.swift */; };
+		7F848C75293FE8E8001CB9A5 /* RevenueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C74293FE8E8001CB9A5 /* RevenueController.swift */; };
+		7F848C77293FE8F7001CB9A5 /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C76293FE8F7001CB9A5 /* SignInController.swift */; };
+		7F848C79293FE903001CB9A5 /* ReferrerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C78293FE903001CB9A5 /* ReferrerController.swift */; };
 		7FB9A60229350FCC00A46B29 /* AdServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FB9A60129350FCC00A46B29 /* AdServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		7FB9A6052935481900A46B29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB9A6042935481900A46B29 /* Constants.swift */; };
 		7FB9A6072935483A00A46B29 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB9A6062935483A00A46B29 /* Utils.swift */; };
@@ -26,11 +32,18 @@
 		7F002F16293025FB0073C2A4 /* SwiftCocoaPods.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftCocoaPods.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F002F19293025FB0073C2A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F002F1B293025FB0073C2A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7F002F1D293025FB0073C2A4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7F002F20293025FB0073C2A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7F002F22293025FD0073C2A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F002F25293025FD0073C2A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7F002F27293025FD0073C2A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F40D2B02941195400A69932 /* TabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabController.swift; sourceTree = "<group>"; };
+		7F78ABF02936764A00CE7988 /* SwiftCocoaPods.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftCocoaPods.entitlements; sourceTree = "<group>"; };
+		7F848C6E293FE84D001CB9A5 /* PrivacyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyController.swift; sourceTree = "<group>"; };
+		7F848C70293FE8C7001CB9A5 /* DeeplinkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeeplinkController.swift; sourceTree = "<group>"; };
+		7F848C72293FE8D6001CB9A5 /* EventsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsController.swift; sourceTree = "<group>"; };
+		7F848C74293FE8E8001CB9A5 /* RevenueController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RevenueController.swift; sourceTree = "<group>"; };
+		7F848C76293FE8F7001CB9A5 /* SignInController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInController.swift; sourceTree = "<group>"; };
+		7F848C78293FE903001CB9A5 /* ReferrerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferrerController.swift; sourceTree = "<group>"; };
 		7FB9A60129350FCC00A46B29 /* AdServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdServices.framework; path = System/Library/Frameworks/AdServices.framework; sourceTree = SDKROOT; };
 		7FB9A60329350FFB00A46B29 /* SwiftCocoaPods-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftCocoaPods-Bridging-Header.h"; sourceTree = "<group>"; };
 		7FB9A6042935481900A46B29 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -71,9 +84,10 @@
 		7F002F18293025FB0073C2A4 /* SwiftCocoaPods */ = {
 			isa = PBXGroup;
 			children = (
+				7FB16DFA293FE380001884D9 /* Controllers */,
+				7F78ABF02936764A00CE7988 /* SwiftCocoaPods.entitlements */,
 				7F002F19293025FB0073C2A4 /* AppDelegate.swift */,
 				7F002F1B293025FB0073C2A4 /* SceneDelegate.swift */,
-				7F002F1D293025FB0073C2A4 /* ViewController.swift */,
 				7F002F1F293025FB0073C2A4 /* Main.storyboard */,
 				7F002F22293025FD0073C2A4 /* Assets.xcassets */,
 				7F002F24293025FD0073C2A4 /* LaunchScreen.storyboard */,
@@ -83,6 +97,20 @@
 				7FB9A6062935483A00A46B29 /* Utils.swift */,
 			);
 			path = SwiftCocoaPods;
+			sourceTree = "<group>";
+		};
+		7FB16DFA293FE380001884D9 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7F848C6E293FE84D001CB9A5 /* PrivacyController.swift */,
+				7F848C70293FE8C7001CB9A5 /* DeeplinkController.swift */,
+				7F848C72293FE8D6001CB9A5 /* EventsController.swift */,
+				7F848C74293FE8E8001CB9A5 /* RevenueController.swift */,
+				7F848C76293FE8F7001CB9A5 /* SignInController.swift */,
+				7F848C78293FE903001CB9A5 /* ReferrerController.swift */,
+				7F40D2B02941195400A69932 /* TabController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		B885CF0DE6E834AC02A30703 /* Frameworks */ = {
@@ -200,11 +228,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F848C71293FE8C7001CB9A5 /* DeeplinkController.swift in Sources */,
 				7FB9A6072935483A00A46B29 /* Utils.swift in Sources */,
-				7F002F1E293025FB0073C2A4 /* ViewController.swift in Sources */,
+				7F848C73293FE8D6001CB9A5 /* EventsController.swift in Sources */,
+				7F848C77293FE8F7001CB9A5 /* SignInController.swift in Sources */,
+				7F40D2B12941195400A69932 /* TabController.swift in Sources */,
 				7F002F1A293025FB0073C2A4 /* AppDelegate.swift in Sources */,
 				7F002F1C293025FB0073C2A4 /* SceneDelegate.swift in Sources */,
+				7F848C75293FE8E8001CB9A5 /* RevenueController.swift in Sources */,
+				7F848C79293FE903001CB9A5 /* ReferrerController.swift in Sources */,
 				7FB9A6052935481900A46B29 /* Constants.swift in Sources */,
+				7F848C6F293FE84D001CB9A5 /* PrivacyController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +384,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftCocoaPods/SwiftCocoaPods.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UL6RU95W7J;
@@ -362,6 +397,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = SwiftCocoaPods/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Singular SCP";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = Testing;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -388,6 +426,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SwiftCocoaPods/SwiftCocoaPods.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UL6RU95W7J;
@@ -400,6 +439,9 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = SwiftCocoaPods/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Singular SCP";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSUserTrackingUsageDescription = Testing;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

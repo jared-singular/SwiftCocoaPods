@@ -8,8 +8,16 @@
 import Foundation
 import UIKit
 import AppTrackingTransparency
+import AdSupport
 
 class Utils {
+    
+    static func isEmptyOrNull(text: String?) -> Bool {
+        if let text = text, text.count != 0, text.trimmingCharacters(in: .whitespacesAndNewlines).count != 0 {
+            return false
+        }
+        return true
+    }
     
     static func requestTrackingAuthorization() {
         if #available(iOS 14, *) {
@@ -20,14 +28,20 @@ class Utils {
                     // your authorization handler here
                     // note: the Singular SDK will automatically detect if authorization has been given and initialize itself
                 }
+                let IDFA = ASIdentifierManager().advertisingIdentifier.uuidString
+                let IDFV = UIDevice().identifierForVendor!.uuidString
+                UserDefaults.standard.set(IDFA, forKey: "idfa")
+                UserDefaults.standard.set(IDFV, forKey: "idfv")
             }
         }
     }
     
-    static func displayMessage(title: String, message: String, withView view:UIViewController) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: {_ in
-        }))
+    static func displayMessage(message: String, withView view:UIViewController) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         view.present(alert, animated: true, completion: nil)
+        let deadlineTime = DispatchTime.now() + .seconds(1)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            alert.dismiss(animated: true, completion: nil)
+        }
     }
 }

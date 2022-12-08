@@ -14,4 +14,8 @@ struct Constants {
     static let DEEPLINK = "deeplink"
     static let PASSTHROUGH = "passthrough"
     static let IS_DEFERRED = "is_deferred"
+    static let OPENURL = "openurl"
+    
+    static let NODEEPLINKTEXT = "App did not open with a deep link"
+    static let NOTDEFERRED = "Not a deferred deep link"
 }
