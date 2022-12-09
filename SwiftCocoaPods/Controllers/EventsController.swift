@@ -13,6 +13,9 @@ class EventsController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(Date(), "-- EventsController - viewDidLoad")
+        var dic: [AnyHashable : Any] = [:]
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "EventsController"
+        Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     
     @IBAction func sng_level_achievedClicked(_ sender: Any) {
@@ -44,7 +47,7 @@ class EventsController: UIViewController {
         print(Date(), "-- customEvent Button Clicked")
         
         // Send a Standard Event to Singular with Attributes
-        // Define an Event Name:
+        // Define an Event Name: NOTE: Event names must be <= 32 characters
         let customEventName = "my_custom_event_name"
         
         // Define Attributes:

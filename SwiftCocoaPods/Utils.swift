@@ -21,7 +21,7 @@ class Utils {
     
     static func requestTrackingAuthorization() {
         if #available(iOS 14, *) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3){
                 // call requestTrackingAuthorizationWithCompletionHandler from ATTrackingManager to start the user consent process
                 ATTrackingManager.requestTrackingAuthorization { status in
                     print(Date(),"-- ATT:",status)

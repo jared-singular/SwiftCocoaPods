@@ -15,14 +15,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         print(Date(), "-- sceneWillConnectTo()")
-        if let userActivity = connectionOptions.userActivities.first {
+        
+        let userActivity = connectionOptions.userActivities.first
+        
+            // Printing Identifier for Vendor (IDFV) to Xcode Console for use in Singular SDK Console
+            print(Date(), "-- Scene Delegate IDFV:", UIDevice().identifierForVendor!.uuidString as Any)
             
-            // Starts a new Singular session from a backgrounded App
+            // (Optional) Get 3rd Party Identifiers to set in Global Properties:
+            // If 3rd party SDKs are providing any identifiers to Singular, the respective SDK must be initialized before Singular.
+            // Initialize third party SDK here and get/set variables needed for Singular.
+            let thirdPartyKey = "anonymousID"
+            let thirdPartyID = "2ed20738-059d-42b5-ab80-5aa0c530e3e1"
+            
+            //Initialize the Singular SDK here:
             if let config = self.getConfig() {
                 config.userActivity = userActivity
+                // Using Singular Global Properties feature to capture third party identifiers
+                config.setGlobalProperty(thirdPartyKey, withValue: thirdPartyID, overrideExisting: true)
                 Singular.start(config)
             }
-        }
+            
+            // Request App Tracking Transparency when the App is Ready, provides IDFA on consent to Singular SDK
+            Utils.requestTrackingAuthorization()
     }
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
@@ -101,37 +115,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not necessarily discarded (see `application:didDiscardSceneSessions` instead).
         print(Date(), "-- sceneDidDisconnect")
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
-        // Called when the scene has moved from an inactive state to an active state.
-        // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
         print(Date(), "-- sceneDidBecomeActive")
-        //print("IDFA:", UserDefaults.standard.string(forKey: "idfa") as Any)
-        //print("IDFV:", UserDefaults.standard.string(forKey: "idfv") as Any)
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
-        // Called when the scene will move from an active state to an inactive state.
-        // This may occur due to temporary interruptions (ex. an incoming phone call).
         print(Date(), "-- sceneWillResignActive")
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
         print(Date(), "-- sceneWillEnterForeground")
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
         print(Date(), "-- sceneDidEnterBackground")
     }
 }

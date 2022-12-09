@@ -15,6 +15,9 @@ class SignInController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(Date(), "-- SignInController - viewDidLoad")
+        var dic: [AnyHashable : Any] = [:]
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "SignInController"
+        Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     
     @IBAction func loginClicked(_ sender: Any) {

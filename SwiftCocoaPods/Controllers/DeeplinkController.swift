@@ -17,7 +17,9 @@ class DeeplinkController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Date(), "-- DeeplinkController - viewWillAppear")
+        var dic: [AnyHashable : Any] = [:]
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "DeeplinkController"
+        Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     
     override func viewWillAppear(_ animated: Bool) {

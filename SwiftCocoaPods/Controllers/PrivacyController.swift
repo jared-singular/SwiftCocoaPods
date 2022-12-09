@@ -19,6 +19,9 @@ class PrivacyController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.selectedIndex = 0
+        var dic: [AnyHashable : Any] = [:]
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "PrivacyController"
+        Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     
     override func viewWillAppear(_ animated: Bool) {

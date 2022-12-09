@@ -16,6 +16,9 @@ class ReferrerController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(Date(), "-- ReferrerController - viewWillAppear")
+        var dic: [AnyHashable : Any] = [:]
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "ReferrerController"
+        Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

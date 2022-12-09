@@ -14,6 +14,9 @@ class RevenueController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         print(Date(), "-- RevenueController - viewDidLoad")
+        var dic: [AnyHashable : Any] = [:]
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "RevenueController"
+        Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     
     
