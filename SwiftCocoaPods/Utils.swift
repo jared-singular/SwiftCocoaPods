@@ -21,7 +21,7 @@ class Utils {
     
     static func requestTrackingAuthorization() {
         if #available(iOS 14, *) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1){
                 // call requestTrackingAuthorizationWithCompletionHandler from ATTrackingManager to start the user consent process
                 ATTrackingManager.requestTrackingAuthorization { status in
                     print(Date(),"-- ATT:",status)
@@ -39,7 +39,7 @@ class Utils {
     static func displayMessage(message: String, withView view:UIViewController) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         view.present(alert, animated: true, completion: nil)
-        let deadlineTime = DispatchTime.now() + .seconds(1)
+        let deadlineTime = DispatchTime.now() + .seconds(3)
         DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
             alert.dismiss(animated: true, completion: nil)
         }

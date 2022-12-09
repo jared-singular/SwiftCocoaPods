@@ -12,61 +12,86 @@ import AdSupport
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
-    
+
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         print(Date(), "-- sceneWillConnectTo()")
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        
         if let userActivity = connectionOptions.userActivities.first {
-            print("Here")
-            // Starts a new session when the user opens the app using a Singular Link while it was in the background
-            Singular.startSession(Constants.APIKEY, withKey: Constants.SECRET, andUserActivity: userActivity, withSingularLinkHandler: { params in
-                self.processDeeplink(params: params)
-            }, andSupportedDomains: ["www.jaredornstead.com"])
+            
+            // Starts a new Singular session from a backgrounded App
+            if let config = self.getConfig() {
+                config.userActivity = userActivity
+                Singular.start(config)
+            }
         }
     }
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         print(Date(), "-- sceneContinueUserActivity")
-        // Capture the OpenURL and store in Dicitionary
+        
+        // Capture the OpenURL and store in UserDefaults
         let openurlString = userActivity.webpageURL?.absoluteString
         UserDefaults.standard.set(openurlString, forKey: Constants.OPENURL)
         
+        // Starts a new Singular session on continueUserActivity
         if let config = self.getConfig() {
             config.userActivity = userActivity
             Singular.start(config)
         }
     }
     
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        print(Date(), "-- openURLContexts")
+        
+        // Capture the OpenURL and store in UserDefaults
+        let openurlString = URLContexts.first?.url
+        UserDefaults.standard.set(openurlString?.absoluteString, forKey: Constants.DEEPLINK)
+        UserDefaults.standard.set(openurlString?.absoluteString, forKey: Constants.OPENURL)
+        
+        // Starts a new Singular session on cold start from deeplink scheme
+        if let config = self.getConfig() {
+            config.openUrl = openurlString
+            Singular.start(config)
+        }
+        
+        // Redirect to the DeeplinkController if Non-Singular deeplink exists
+        if (!Utils.isEmptyOrNull(text: openurlString?.absoluteString)) {
+            DispatchQueue.main.async(execute: { [self] in
+                let tabBar = window?.rootViewController as? TabController
+                tabBar?.openedWithDeeplink()
+            })
+        }
+    }
+    
     func getConfig() -> SingularConfig? {
         print(Date(), "-- Scene Delegate getConfig")
+        
+        // Singular Config Options
         guard let config = SingularConfig(apiKey: Constants.APIKEY, andSecret: Constants.SECRET) else {
             return nil
         }
+        config.skAdNetworkEnabled = true
+        config.waitForTrackingAuthorizationWithTimeoutInterval = 300
+        config.supportedDomains = ["www.jaredornstead.com"]
         config.singularLinksHandler = { params in
             self.processDeeplink(params: params)
         }
         return config
     }
-
     
     func processDeeplink(params: SingularLinkParams!) {
         print(Date(), "-- Scene Delegate processDeeplink()")
-
+        
         // Get Deeplink data from Singular Link
         let deeplink = params.getDeepLink()
         let passthrough = params.getPassthrough()
         let isDeferredDeeplink = params.isDeferred() ? "Yes" : "No"
 
-        // Store in UserDefaults for access from DeeplinkController
+        // Store deeplink data in UserDefaults for access from DeeplinkController
         UserDefaults.standard.set(deeplink, forKey: Constants.DEEPLINK)
         UserDefaults.standard.set(passthrough, forKey: Constants.PASSTHROUGH)
         UserDefaults.standard.set(isDeferredDeeplink, forKey: Constants.IS_DEFERRED)
-        //UserDefaults.standard.set(openurlString, forKey: Constants.OPENURL)
-
-        // Handle to the DeeplinkController if deeplink exists
+        
+        // Redirect to the DeeplinkController if deeplink exists
         if (!Utils.isEmptyOrNull(text: deeplink)) {
             DispatchQueue.main.async(execute: { [self] in
                 let tabBar = window?.rootViewController as? TabController
@@ -109,8 +134,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
         print(Date(), "-- sceneDidEnterBackground")
     }
-
-
 }
 
 

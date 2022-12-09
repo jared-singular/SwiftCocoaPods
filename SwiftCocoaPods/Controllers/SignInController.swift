@@ -14,19 +14,22 @@ class SignInController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        print("SignInController - viewDidLoad")
+        print(Date(), "-- SignInController - viewDidLoad")
     }
     
     @IBAction func loginClicked(_ sender: Any) {
         let userID = userIDField.text
-        
         if (userID == nil || userID == ""){
             Utils.displayMessage(message: "Enter a UserID to simulate the login process!", withView: self)
         } else {
-            print("Login Button Clicked")
+            print(Date(), "-- Login Button Clicked")
+            
+            // Set the User ID in Singular using the setCustomUserID Method
             Singular.setCustomUserId(userID)
+            
+            // Sending a Standard Event after setting the customUserID show the Custom User ID is inhereted.
             Singular.event(EVENT_SNG_LOGIN)
+            
             userIDField.text = nil;
             Utils.displayMessage(message: "Login Success!", withView: self)
         }

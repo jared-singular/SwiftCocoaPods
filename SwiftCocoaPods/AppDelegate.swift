@@ -13,28 +13,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
         print(Date(), "-- didFinishLaunchingWithOptions()")
         
-        // Print Identifier for Vendor (IDFV)
-        print(Date(), "App Delegate IDFV:", UIDevice().identifierForVendor!.uuidString as Any)
+        // Printing Identifier for Vendor (IDFV) to Xcode Console for use in Singular SDK Console
+        print(Date(), "-- App Delegate IDFV:", UIDevice().identifierForVendor!.uuidString as Any)
         
-        // Get 3rd Party Identifiers to set in Global Properties:
+        // (Optional) Get 3rd Party Identifiers to set in Global Properties:
+        // If 3rd party SDKs are providing any identifiers to Singular, the respective SDK must be initialized before Singular.
+        // Initialize third party SDK here and get/set variables needed for Singular.
         let thirdPartyKey = "anonymousID"
         let thirdPartyID = "2ed20738-059d-42b5-ab80-5aa0c530e3e1"
         
-        // Add Singular SDK Init Here:
-        //Initialize the Singular SDK
-        Singular.startSession(Constants.APIKEY, withKey: Constants.SECRET, withSingularLinkHandler: { params in
-            //if the app opens on a deep link, callback is triggered
-            //handle the values needed for the app
-            self.processDeeplink(params: params)
-        })
+        //Initialize the Singular SDK here:
+        if let config = self.getConfig() {
+            config.launchOptions = launchOptions
+            // Using Singular Global Properties feature to capture third party identifiers
+            config.setGlobalProperty(thirdPartyKey, withValue: thirdPartyID, overrideExisting: true)
+            Singular.start(config)
+        }
         
         // Request App Tracking Transparency when the App is Ready, provides IDFA on consent to Singular SDK
         Utils.requestTrackingAuthorization()
         
         return true
+    }
+    
+    func getConfig() -> SingularConfig? {
+        print(Date(), "-- App Delegate getConfig")
+        
+        // Singular Config Options
+        guard let config = SingularConfig(apiKey: Constants.APIKEY, andSecret: Constants.SECRET) else {
+            return nil
+        }
+        config.skAdNetworkEnabled = true
+        config.waitForTrackingAuthorizationWithTimeoutInterval = 300
+        config.supportedDomains = ["www.jaredornstead.com"]
+        config.singularLinksHandler = { params in
+            self.processDeeplink(params: params)
+        }
+        return config
     }
     
     func processDeeplink(params: SingularLinkParams!) {
@@ -45,20 +62,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let passthrough = params.getPassthrough()
         let isDeferredDeeplink = params.isDeferred() ? "Yes" : "No"
 
-        // Store in UserDefaults for access from DeeplinkController
+        // Store deeplink data in UserDefaults for access from DeeplinkController
         UserDefaults.standard.set(deeplink, forKey: Constants.DEEPLINK)
         UserDefaults.standard.set(passthrough, forKey: Constants.PASSTHROUGH)
         UserDefaults.standard.set(isDeferredDeeplink, forKey: Constants.IS_DEFERRED)
-        //UserDefaults.standard.set(openurlString, forKey: Constants.OPENURL)
 
-        // Handle to the DeeplinkController if deeplink exists
-        DispatchQueue.main.async {
-            if let tabBar = UIApplication.shared.windows.first?.rootViewController as? TabController {
-                tabBar.openedWithDeeplink()
+        // Redirect to the DeeplinkController if deeplink exists
+        if (!Utils.isEmptyOrNull(text: deeplink)){
+            DispatchQueue.main.async {
+                if let tabBar = UIApplication.shared.windows.first?.rootViewController as? TabController {
+                    tabBar.openedWithDeeplink()
+                }
             }
-            
         }
-    
     }
         
     // MARK: UISceneSession Lifecycle
@@ -76,4 +92,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
 }
-
