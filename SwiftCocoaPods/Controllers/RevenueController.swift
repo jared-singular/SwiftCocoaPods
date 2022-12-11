@@ -15,7 +15,9 @@ class RevenueController: UIViewController {
         // Do any additional setup after loading the view.
         print(Date(), "-- RevenueController - viewDidLoad")
         var dic: [AnyHashable : Any] = [:]
-        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "RevenueController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_TYPE] = "RevenueController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "2"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT] = "Revenue Method Buttons"
         Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     

@@ -20,7 +20,9 @@ class PrivacyController: UIViewController {
         super.viewDidLoad()
         self.tabBarController?.selectedIndex = 0
         var dic: [AnyHashable : Any] = [:]
-        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "PrivacyController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_TYPE] = "PrivacyController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "0"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT] = "GDPR & CCPA Opt-Out Options"
         Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     

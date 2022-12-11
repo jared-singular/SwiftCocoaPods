@@ -18,7 +18,9 @@ class DeeplinkController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         var dic: [AnyHashable : Any] = [:]
-        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "DeeplinkController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_TYPE] = "DeeplinkController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "4"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT] = "Deeplink and Open URL Details"
         Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     

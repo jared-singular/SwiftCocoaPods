@@ -17,7 +17,9 @@ class ReferrerController: UIViewController {
         super.viewDidLoad()
         print(Date(), "-- ReferrerController - viewWillAppear")
         var dic: [AnyHashable : Any] = [:]
-        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "ReferrerController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_TYPE] = "ReferrerController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "5"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT] = "Share Link Simulation"
         Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     

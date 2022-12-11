@@ -16,7 +16,9 @@ class SignInController: UIViewController {
         super.viewDidLoad()
         print(Date(), "-- SignInController - viewDidLoad")
         var dic: [AnyHashable : Any] = [:]
-        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "SignInController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_TYPE] = "SignInController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "1"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT] = "Simulated Login Button"
         Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     

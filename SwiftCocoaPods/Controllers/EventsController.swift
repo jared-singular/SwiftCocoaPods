@@ -14,7 +14,9 @@ class EventsController: UIViewController {
         super.viewDidLoad()
         print(Date(), "-- EventsController - viewDidLoad")
         var dic: [AnyHashable : Any] = [:]
-        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "EventsController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_TYPE] = "EventsController"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "3"
+        dic[ATTRIBUTE_SNG_ATTR_CONTENT] = "Event Method Buttons"
         Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
     }
     
