@@ -85,7 +85,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         config.skAdNetworkEnabled = true
         config.waitForTrackingAuthorizationWithTimeoutInterval = 300
-        config.supportedDomains = ["www.jaredornstead.com"]
+        config.supportedDomains = ["www.your-web-domain.com"]
         config.singularLinksHandler = { params in
             self.processDeeplink(params: params)
         }

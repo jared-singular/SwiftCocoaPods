@@ -4,7 +4,6 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:jaredornstead.com</string>
 		<string>applinks:joswiftpods.sng.link</string>
 	</array>
 </dict>
