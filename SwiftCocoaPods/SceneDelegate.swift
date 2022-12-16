@@ -21,17 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             // Printing Identifier for Vendor (IDFV) to Xcode Console for use in Singular SDK Console
             print(Date(), "-- Scene Delegate IDFV:", UIDevice().identifierForVendor!.uuidString as Any)
             
-            // (Optional) Get 3rd Party Identifiers to set in Global Properties:
-            // If 3rd party SDKs are providing any identifiers to Singular, the respective SDK must be initialized before Singular.
-            // Initialize third party SDK here and get/set variables needed for Singular.
-            let thirdPartyKey = "anonymousID"
-            let thirdPartyID = "2ed20738-059d-42b5-ab80-5aa0c530e3e1"
-            
             //Initialize the Singular SDK here:
             if let config = self.getConfig() {
                 config.userActivity = userActivity
-                // Using Singular Global Properties feature to capture third party identifiers
-                config.setGlobalProperty(thirdPartyKey, withValue: thirdPartyID, overrideExisting: true)
                 Singular.start(config)
             }
             
@@ -79,16 +71,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func getConfig() -> SingularConfig? {
         print(Date(), "-- Scene Delegate getConfig")
         
+        // (Optional) Get 3rd Party Identifiers to set in Global Properties:
+        // If 3rd party SDKs are providing any identifiers to Singular, the respective SDK must be initialized before Singular.
+        // Initialize third party SDK here and get/set variables needed for Singular.
+        let thirdPartyKey = "anonymousID"
+        let thirdPartyID = "2ed20738-059d-42b5-ab80-5aa0c530e3e1"
+        
         // Singular Config Options
         guard let config = SingularConfig(apiKey: Constants.APIKEY, andSecret: Constants.SECRET) else {
             return nil
         }
         config.skAdNetworkEnabled = true
+        // If your app is not displaying the App Tracking Transparency pop-up for consent, comment out the next line
         config.waitForTrackingAuthorizationWithTimeoutInterval = 300
-        config.supportedDomains = ["www.your-web-domain.com"]
+        config.supportedDomains = ["subdomain.mywebsite.com","anothersubdomain.myotherwebsite.com"]
         config.singularLinksHandler = { params in
             self.processDeeplink(params: params)
         }
+        // Using Singular Global Properties feature to capture third party identifiers
+        config.setGlobalProperty(thirdPartyKey, withValue: thirdPartyID, overrideExisting: true)
+        Singular.setSessionTimeout(120)
         return config
     }
     

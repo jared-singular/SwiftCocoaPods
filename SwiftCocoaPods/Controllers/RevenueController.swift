@@ -51,6 +51,14 @@ class RevenueController: UIViewController {
         Singular.revenue("EUR",amount:5.00, productSKU:"SKU1928375",
         productName:"Reservation Fee",productCategory:"Fee",
         productQuantity:1, productPrice:5.00)
+        
+        // Send a Revenue Event with attributes in a dictionary
+        var dic: [AnyHashable : Any] = [:]
+        dic[ATTRIBUTE_SNG_ATTR_ITEM_DESCRIPTION] = "100% Organic Cotton Mixed Plaid Flannel Shirt"
+        dic[ATTRIBUTE_SNG_ATTR_ITEM_PRICE] = "$69.95"
+        dic[ATTRIBUTE_SNG_ATTR_RATING] = "5 Star"
+        dic[ATTRIBUTE_SNG_ATTR_SEARCH_STRING] = "Flannel Shirt"
+        Singular.revenue("USD", amount: 19.95, withAttributes: dic)
     }
     
     
@@ -66,6 +74,14 @@ class RevenueController: UIViewController {
         amount:5.00, productSKU:"SKU1928375",
         productName:"Reservation Fee", productCategory:"Fee",
         productQuantity:1, productPrice:5.00)
+        
+        // Send a Custom Revenue Event with attributes in a dictionary
+        var dic: [AnyHashable : Any] = [:]
+        dic[ATTRIBUTE_SNG_ATTR_ITEM_DESCRIPTION] = "100% Organic Cotton Mixed Plaid Flannel Shirt"
+        dic[ATTRIBUTE_SNG_ATTR_ITEM_PRICE] = "$69.95"
+        dic[ATTRIBUTE_SNG_ATTR_RATING] = "5 Star"
+        dic[ATTRIBUTE_SNG_ATTR_SEARCH_STRING] = "Flannel Shirt"
+        Singular.customRevenue("CustomRevenueWithArgsDic", currency: "USD", amount: 44.99, withAttributes: dic)
     }
     
 }
