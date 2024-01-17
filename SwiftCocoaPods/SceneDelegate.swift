@@ -29,6 +29,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             // Request App Tracking Transparency when the App is Ready, provides IDFA on consent to Singular SDK
             Utils.requestTrackingAuthorization()
+            
+            
+            
     }
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
@@ -81,10 +84,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let config = SingularConfig(apiKey: Constants.APIKEY, andSecret: Constants.SECRET) else {
             return nil
         }
-        config.skAdNetworkEnabled = true
         // If your app is not displaying the App Tracking Transparency pop-up for consent, comment out the next line
         config.waitForTrackingAuthorizationWithTimeoutInterval = 300
-        config.supportedDomains = ["subdomain.mywebsite.com","anothersubdomain.myotherwebsite.com"]
         config.singularLinksHandler = { params in
             self.processDeeplink(params: params)
         }
