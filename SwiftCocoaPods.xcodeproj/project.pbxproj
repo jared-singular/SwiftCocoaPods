@@ -12,6 +12,8 @@
 		7F002F21293025FB0073C2A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F002F1F293025FB0073C2A4 /* Main.storyboard */; };
 		7F002F23293025FD0073C2A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F002F22293025FD0073C2A4 /* Assets.xcassets */; };
 		7F002F26293025FD0073C2A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7F002F24293025FD0073C2A4 /* LaunchScreen.storyboard */; };
+		7F16F8FC2B7D3C1200F65EDB /* Pods_SwiftCocoaPods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4432AD1A82C15B1BBE996E83 /* Pods_SwiftCocoaPods.framework */; };
+		7F16F8FD2B7D3C1200F65EDB /* Pods_SwiftCocoaPods.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4432AD1A82C15B1BBE996E83 /* Pods_SwiftCocoaPods.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		7F40D2B12941195400A69932 /* TabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F40D2B02941195400A69932 /* TabController.swift */; };
 		7F848C6F293FE84D001CB9A5 /* PrivacyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C6E293FE84D001CB9A5 /* PrivacyController.swift */; };
 		7F848C71293FE8C7001CB9A5 /* DeeplinkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C70293FE8C7001CB9A5 /* DeeplinkController.swift */; };
@@ -19,11 +21,23 @@
 		7F848C75293FE8E8001CB9A5 /* RevenueController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C74293FE8E8001CB9A5 /* RevenueController.swift */; };
 		7F848C77293FE8F7001CB9A5 /* SignInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C76293FE8F7001CB9A5 /* SignInController.swift */; };
 		7F848C79293FE903001CB9A5 /* ReferrerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C78293FE903001CB9A5 /* ReferrerController.swift */; };
-		7FB9A60229350FCC00A46B29 /* AdServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FB9A60129350FCC00A46B29 /* AdServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		7FB9A6052935481900A46B29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB9A6042935481900A46B29 /* Constants.swift */; };
 		7FB9A6072935483A00A46B29 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB9A6062935483A00A46B29 /* Utils.swift */; };
-		81E8CAAEF079D9C848F1E2A3 /* Pods_SwiftCocoaPods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4432AD1A82C15B1BBE996E83 /* Pods_SwiftCocoaPods.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7F16F8FE2B7D3C1200F65EDB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7F16F8FD2B7D3C1200F65EDB /* Pods_SwiftCocoaPods.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		02AA56D11B8FD24EFA1736CC /* Pods-SwiftCocoaPods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftCocoaPods.release.xcconfig"; path = "Target Support Files/Pods-SwiftCocoaPods/Pods-SwiftCocoaPods.release.xcconfig"; sourceTree = "<group>"; };
@@ -48,6 +62,12 @@
 		7FB9A60329350FFB00A46B29 /* SwiftCocoaPods-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwiftCocoaPods-Bridging-Header.h"; sourceTree = "<group>"; };
 		7FB9A6042935481900A46B29 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7FB9A6062935483A00A46B29 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		7FC761CA2B7D36E400811802 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		7FC761CD2B7D38D100811802 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		7FC761CF2B7D38DB00811802 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		7FC761D12B7D38E800811802 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		7FC761D32B7D38EF00811802 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		7FC761D52B7D390300811802 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7FB9A60229350FCC00A46B29 /* AdServices.framework in Frameworks */,
-				81E8CAAEF079D9C848F1E2A3 /* Pods_SwiftCocoaPods.framework in Frameworks */,
+				7F16F8FC2B7D3C1200F65EDB /* Pods_SwiftCocoaPods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +135,12 @@
 		B885CF0DE6E834AC02A30703 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FC761D52B7D390300811802 /* AdSupport.framework */,
+				7FC761D32B7D38EF00811802 /* libsqlite3.0.tbd */,
+				7FC761D12B7D38E800811802 /* libz.tbd */,
+				7FC761CF2B7D38DB00811802 /* StoreKit.framework */,
+				7FC761CD2B7D38D100811802 /* Security.framework */,
+				7FC761CA2B7D36E400811802 /* WebKit.framework */,
 				7FB9A60129350FCC00A46B29 /* AdServices.framework */,
 				4432AD1A82C15B1BBE996E83 /* Pods_SwiftCocoaPods.framework */,
 			);
@@ -142,6 +167,7 @@
 				7F002F12293025FB0073C2A4 /* Sources */,
 				7F002F13293025FB0073C2A4 /* Frameworks */,
 				7F002F14293025FB0073C2A4 /* Resources */,
+				7F16F8FE2B7D3C1200F65EDB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -412,7 +438,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jaredornstead.SwiftCocoaPods;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -458,7 +484,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jaredornstead.SwiftCocoaPods;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
