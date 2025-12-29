@@ -13,52 +13,64 @@ import AdSupport
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        print(Date(), "-- sceneWillConnectTo()")
-        
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession,
+                  options connectionOptions: UIScene.ConnectionOptions) {
+        // ANTI-SWIZZLING capture (unchanged)
         let userActivity = connectionOptions.userActivities.first
-        
-            // Printing Identifier for Vendor (IDFV) to Xcode Console for use in Singular SDK Console
-            print(Date(), "-- Scene Delegate IDFV:", UIDevice().identifierForVendor!.uuidString as Any)
-            
-            //Initialize the Singular SDK here:
-            if let config = self.getConfig() {
-                config.userActivity = userActivity
-                Singular.start(config)
-            }
-                        
-            // Request App Tracking Transparency when the App is Ready, provides IDFA on consent to Singular SDK
-            Utils.requestTrackingAuthorization()
-            
+        let urlContext = connectionOptions.urlContexts.first
+        let openUrl = urlContext?.url
+
+        #if DEBUG
+        print("[SWIZZLE CHECK] UserActivity captured:", userActivity?.webpageURL?.absoluteString ?? "none")
+        print("[SWIZZLE CHECK] URL Context captured:", openUrl?.absoluteString ?? "none")
+        print("IDFV:", UIDevice.current.identifierForVendor?.uuidString ?? "N/A")
+        #endif
+
+        guard let windowScene = scene as? UIWindowScene else { return }
+
+        let window = UIWindow(windowScene: windowScene)
+
+        // Load initial VC from Main.storyboard (your TabController)
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let rootVC = storyboard.instantiateInitialViewController() else { return }
+
+        window.rootViewController = rootVC
+        self.window = window
+        window.makeKeyAndVisible()
+
+        // Singular initialization (unchanged)
+        guard let config = getConfig() else { return }
+        if let userActivity = userActivity {
+            config.userActivity = userActivity
+        }
+        if let openUrl = openUrl {
+            config.openUrl = openUrl
+        }
+        Singular.start(config)
     }
     
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
-        print(Date(), "-- sceneContinueUserActivity")
-        
-        // Capture the OpenURL and store in UserDefaults
-        let openurlString = userActivity.webpageURL?.absoluteString
-        UserDefaults.standard.set(openurlString, forKey: Constants.OPENURL)
-        
-        // Starts a new Singular session on continueUserActivity
-        if let config = self.getConfig() {
+            guard let config = getConfig() else { return }
             config.userActivity = userActivity
+            
+            // Initialize Singular SDK
             Singular.start(config)
         }
-    }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        print(Date(), "-- openURLContexts")
+        guard let config = getConfig() else { return }
         
         // Capture the OpenURL and store in UserDefaults
         let openurlString = URLContexts.first?.url
         UserDefaults.standard.set(openurlString?.absoluteString, forKey: Constants.DEEPLINK)
         UserDefaults.standard.set(openurlString?.absoluteString, forKey: Constants.OPENURL)
-        
-        // Starts a new Singular session on cold start from deeplink scheme
-        if let config = self.getConfig() {
-            config.openUrl = openurlString
-            Singular.start(config)
+            
+        if let url = URLContexts.first?.url {
+            config.openUrl = url
         }
+            
+        // Initialize Singular SDK
+        Singular.start(config)
         
         // Redirect to the DeeplinkController if Non-Singular deeplink exists
         if (!Utils.isEmptyOrNull(text: openurlString?.absoluteString)) {
@@ -69,64 +81,67 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    func getConfig() -> SingularConfig? {
-        print(Date(), "-- Scene Delegate getConfig")
-        
-        // (Optional) Get 3rd Party Identifiers to set in Global Properties:
-        // If 3rd party SDKs are providing any identifiers to Singular, the respective SDK must be initialized before Singular.
-        // Initialize third party SDK here and get/set variables needed for Singular.
-        let thirdPartyKey = "anonymousID"
-        let thirdPartyID = "2ed20738-059d-42b5-ab80-5aa0c530e3e1"
-        
-        // Singular Config Options
-        guard let config = SingularConfig(apiKey: Constants.APIKEY, andSecret: Constants.SECRET) else {
+    // MARK: - Singular Configuration
+    private func getConfig() -> SingularConfig? {
+        // Create config with your credentials
+        guard let config = SingularConfig(
+            apiKey: Constants.APIKEY,
+            andSecret: Constants.SECRET) else {
             return nil
         }
-        // If your app is not displaying the App Tracking Transparency pop-up for consent, comment out the next line
+        
+        // OPTIONAL: Wait for Apple Tracking Transparency consent
+        // Remove this line if NOT using App Tracking Transparency
         config.waitForTrackingAuthorizationWithTimeoutInterval = 300
         
-        // Call AttributionInfoHandler
+        // OPTIONAL: Support custom ESP domains for deep links
+        config.espDomains = ["links.your-domain.com"]
+        
+        // OPTIONAL: Handle deep links
+        config.singularLinksHandler = { params in
+            if let params = params {
+              self.handleDeeplink(params)
+            }
+        }
+        
+        // OPTIONAL: Device Attribution Info Callback --- This is a BETA feature
         config.deviceAttributionCallback = { attributionInfo in
             self.attributionInfoHandler(attributionInfo)
         }
         
-        // Call SingularLinkHandler
-        config.singularLinksHandler = { params in
-            self.handleDeeplink(params: params)
-        }
-        
+        // OPTIONAL: Set Global Properties with 3rd-Party Identifiers
         // Using Singular Global Properties feature to capture third party identifiers
+        let thirdPartyKey = "anonymousID"
+        let thirdPartyID = "2ed20738-059d-42b5-ab80-5aa0c530e3e1"
         config.setGlobalProperty(thirdPartyKey, withValue: thirdPartyID, overrideExisting: true)
+        
+        // OPTIONAL: Set Session Timeout to 2min
         Singular.setSessionTimeout(120)
+        
         return config
     }
-    
-    func attributionInfoHandler(_ attributionInfo: [AnyHashable: Any]?) {
-        guard let attributionInfo = attributionInfo else {
-            print(Date(), "-- Singular attributionInfo is nil")
-            return
+
+    // MARK: - OPTIONAL: Deep link handler implementation
+    private func handleDeeplink(_ params: SingularLinkParams) {
+        // Guard clause: Exit if no deep link provided
+        guard let deeplink = params.getDeepLink() else {
+          return
         }
-        print(Date(), "-- Singular Attribution Info: \(attributionInfo)")
-        // Add Attribution handling code here
-    }
-    
-    func handleDeeplink(params: SingularLinkParams?) {
-        print(Date(), "-- Scene Delegate handleDeeplink()")
+                
+        // Extract deep link parameters
+        let passthrough = params.getPassthrough()
+        let isDeferredDeeplink = params.isDeferred()
+        let urlParams = params.getUrlParameters()
         
-        // Get Deeplink data from Singular Link
-        let deeplink = params?.getDeepLink()
-        let passthrough = params?.getPassthrough()
-        let isDeferredDeeplink = params?.isDeferred()
-        let urlParams = params?.getUrlParameters()
-        
-        // Add deep link handling code here
-        
-        // Log SingularLinkParams
+        #if DEBUG
+        // Debug logging only - stripped from production builds
         print(Date(), "-- Singular deeplink: \(String(describing: deeplink))")
         print(Date(), "-- Singular passthrough: \(String(describing: passthrough))")
         print(Date(), "-- Singular isDeferred: \(String(describing: isDeferredDeeplink))")
         print(Date(), "-- Singular urlParams: \(String(describing: urlParams))")
+        #endif
         
+        // TODO: Navigate to appropriate screen based on deep link
         // Store deeplink data in UserDefaults for access from DeeplinkController
         UserDefaults.standard.set(deeplink, forKey: Constants.DEEPLINK)
         UserDefaults.standard.set(passthrough, forKey: Constants.PASSTHROUGH)
@@ -141,12 +156,41 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
+    private func attributionInfoHandler(_ attributionInfo: [AnyHashable: Any]?) {
+        guard let attributionInfo = attributionInfo else {
+            return
+        }
+        #if DEBUG
+        print(Date(), "-- Singular Attribution Info: \(attributionInfo)")
+        #endif
+        
+        // TODO: Navigate to appropriate screen based on attribution data
+        // Add Attribution handling code here
+    }
+        
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         print(Date(), "-- sceneDidDisconnect")
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         print(Date(), "-- sceneDidBecomeActive")
+        
+//        let url = URL(string: "https://app.thebiblechat.com/Eryen/4r7h2/r_47647a6860")!
+//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+//            if let httpResponse = response as? HTTPURLResponse {
+//                // Access response headers, status code, etc.
+//                print("Status: \(httpResponse.statusCode)")
+//                print("Headers: \(httpResponse.allHeaderFields)")
+//            }
+//            
+//            if let data = data {
+//                // Process response body
+//                print("Body: \(String(data: data, encoding: .utf8) ?? "")")
+//            }
+//        }
+//        task.resume()
+        
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

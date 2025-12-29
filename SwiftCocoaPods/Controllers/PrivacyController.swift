@@ -12,6 +12,7 @@ class PrivacyController: UIViewController {
     
     @IBOutlet weak var gdpr: UISwitch!
     @IBOutlet weak var limited_data_sharing: UISwitch!
+    @IBOutlet weak var limited_advid: UISwitch!
     @IBOutlet weak var idfaValue: UILabel!
     @IBOutlet weak var idfvValue: UILabel!
     @IBOutlet weak var shareDeviceInfo: UIButton!
@@ -77,6 +78,24 @@ class PrivacyController: UIViewController {
             Utils.displayMessage(message: "Limited Data Sharing OptOut - All Data will be shared with networks", withView: self)
         }
     }
+    
+    @IBAction func limitAdvertisingIdentifierOptionToggled(_ sender: Any) {
+        if (limited_advid.isOn){
+            Singular.setLimitAdvertisingIdentifiers(true)
+            Singular.event("LimitAdvId_true")
+            
+            print(Date(), "-- Limit Advertising Identifier - True")
+            Utils.displayMessage(message: "Limit Advertising Identifier - True", withView: self)
+            
+        } else {
+            Singular.setLimitAdvertisingIdentifiers(false)
+            Singular.event("LimitAdvId_false")
+            
+            print(Date(), "-- Limit Advertising Identifier - False")
+            Utils.displayMessage(message: "Limit Advertising Identifier - False", withView: self)
+        }
+    }
+    
     
     @IBAction func shareDeviceInfo(_ sender: Any) {
         let IDFV = UserDefaults.standard.string(forKey: "idfv")

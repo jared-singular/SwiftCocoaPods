@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print(Date(), "-- didFinishLaunchingWithOptions()")
         print(Date(), "-- Note: This app is built with SceneDelegate so the AppDelegate will not be used!")
         
+        // Request App Tracking Transparency when the App is Ready, provides IDFA on consent to Singular SDK
+        Utils.requestTrackingAuthorization()
+        
         return true
     }
            

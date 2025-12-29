@@ -8,8 +8,8 @@
 import Foundation
 
 struct Constants {
-    static let APIKEY = "<YOUR_API_KEY>"
-    static let SECRET = "<YOUR_SECRET>"
+    static let APIKEY = "se_team_9b3431b0"
+    static let SECRET = "bcdee06e8490949422c071437da5c5ed"
     
     static let DEEPLINK = "deeplink"
     static let PASSTHROUGH = "passthrough"
