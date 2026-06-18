@@ -69,9 +69,8 @@
 		7FC761D12B7D38E800811802 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		7FC761D32B7D38EF00811802 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		7FC761D52B7D390300811802 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		7FFF34232FE4A9C200310A19 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.example.xcconfig; sourceTree = "<group>"; };
 		7FFF5A8F2FE49BF70078B941 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
-		7FFF5A902FE49D820078B941 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
-		7FFF5A912FE49D820078B941 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.example.xcconfig; sourceTree = "<group>"; };
 		7FFF5A922FE49E440078B941 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,9 +108,8 @@
 		7F002F18293025FB0073C2A4 /* SwiftCocoaPods */ = {
 			isa = PBXGroup;
 			children = (
+				7FFF34232FE4A9C200310A19 /* Secrets.example.xcconfig */,
 				7FFF5A922FE49E440078B941 /* PrivacyInfo.xcprivacy */,
-				7FFF5A902FE49D820078B941 /* Secrets.xcconfig */,
-				7FFF5A912FE49D820078B941 /* Secrets.example.xcconfig */,
 				7FB16DFA293FE380001884D9 /* Controllers */,
 				7F78ABF02936764A00CE7988 /* SwiftCocoaPods.entitlements */,
 				7F002F19293025FB0073C2A4 /* AppDelegate.swift */,

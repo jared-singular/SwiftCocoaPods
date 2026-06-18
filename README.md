@@ -29,9 +29,9 @@ Reference iOS sample for the [Singular SDK](https://github.com/singular-labs/Sin
    ```
 2. **Create your local secrets file**
    ```bash
-   cp Secrets.example.xcconfig Secrets.xcconfig
+   cp SwiftCocoaPods/Secrets.example.xcconfig Secrets.xcconfig
    ```
-   Open `Secrets.xcconfig` and replace the placeholders with your own Singular API key and secret from the Singular dashboard. This file is gitignored.
+   Open `Secrets.xcconfig` (at the repo root) and replace the placeholders with your own Singular API key and secret from the Singular dashboard. This file is gitignored.
 3. **Wire the xcconfig** (one-time, in Xcode)
    - Open `SwiftCocoaPods.xcworkspace`
    - Select the `SwiftCocoaPods` **project** (not the target) in the navigator
@@ -55,9 +55,9 @@ CocoaPods is in maintenance mode. The Singular iOS SDK is published as a Swift P
 
 ```
 .
-├── Secrets.example.xcconfig # Template — copy to Secrets.xcconfig at repo root
-├── Secrets.xcconfig         # Local-only, gitignored. Holds your API key + secret
+├── Secrets.xcconfig             # Local-only, gitignored. Holds your API key + secret
 └── SwiftCocoaPods/
+    ├── Secrets.example.xcconfig # Template — copy to /Secrets.xcconfig at the repo root
     ├── AppDelegate.swift        # Lifecycle hooks; defers init to SceneDelegate
     ├── SceneDelegate.swift      # Singular.start, deep link routing, ATT
     ├── Constants.swift          # Reads API key/secret from Info.plist (xcconfig)
