@@ -44,12 +44,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let config = getConfig() else { return }
         if let userActivity { config.userActivity = userActivity }
         if let openUrl { config.openUrl = openUrl }
+
+        // Persist the raw inbound URL for the Deeplink tab to display.
+        // Universal Links (Singular tracking links) arrive via userActivity;
+        // custom URL schemes arrive via urlContexts.
+        if let webpageURL = userActivity?.webpageURL {
+            UserDefaults.standard.set(webpageURL.absoluteString, forKey: Constants.OPENURL)
+        } else if let openUrl {
+            UserDefaults.standard.set(openUrl.absoluteString, forKey: Constants.OPENURL)
+        }
+
         Singular.start(config)
     }
 
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         guard let config = getConfig() else { return }
         config.userActivity = userActivity
+
+        // Persist the inbound Universal Link URL so the Deeplink tab can show it.
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+           let webpageURL = userActivity.webpageURL {
+            UserDefaults.standard.set(webpageURL.absoluteString, forKey: Constants.OPENURL)
+        }
+
         Singular.start(config)
     }
 
