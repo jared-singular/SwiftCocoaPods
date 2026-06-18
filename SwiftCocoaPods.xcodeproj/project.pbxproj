@@ -23,6 +23,7 @@
 		7F848C79293FE903001CB9A5 /* ReferrerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F848C78293FE903001CB9A5 /* ReferrerController.swift */; };
 		7FB9A6052935481900A46B29 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB9A6042935481900A46B29 /* Constants.swift */; };
 		7FB9A6072935483A00A46B29 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FB9A6062935483A00A46B29 /* Utils.swift */; };
+		7FFF5A932FE49E440078B941 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 7FFF5A922FE49E440078B941 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +69,10 @@
 		7FC761D12B7D38E800811802 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		7FC761D32B7D38EF00811802 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		7FC761D52B7D390300811802 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		7FFF5A8F2FE49BF70078B941 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		7FFF5A902FE49D820078B941 /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
+		7FFF5A912FE49D820078B941 /* Secrets.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.example.xcconfig; sourceTree = "<group>"; };
+		7FFF5A922FE49E440078B941 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +94,7 @@
 				7F002F17293025FB0073C2A4 /* Products */,
 				EEE482C95D6CEFB301C81D03 /* Pods */,
 				B885CF0DE6E834AC02A30703 /* Frameworks */,
+				7FFF5A8F2FE49BF70078B941 /* Secrets.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -103,6 +109,9 @@
 		7F002F18293025FB0073C2A4 /* SwiftCocoaPods */ = {
 			isa = PBXGroup;
 			children = (
+				7FFF5A922FE49E440078B941 /* PrivacyInfo.xcprivacy */,
+				7FFF5A902FE49D820078B941 /* Secrets.xcconfig */,
+				7FFF5A912FE49D820078B941 /* Secrets.example.xcconfig */,
 				7FB16DFA293FE380001884D9 /* Controllers */,
 				7F78ABF02936764A00CE7988 /* SwiftCocoaPods.entitlements */,
 				7F002F19293025FB0073C2A4 /* AppDelegate.swift */,
@@ -219,6 +228,7 @@
 			files = (
 				7F002F26293025FD0073C2A4 /* LaunchScreen.storyboard in Resources */,
 				7F002F23293025FD0073C2A4 /* Assets.xcassets in Resources */,
+				7FFF5A932FE49E440078B941 /* PrivacyInfo.xcprivacy in Resources */,
 				7F002F21293025FB0073C2A4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -256,9 +266,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SwiftCocoaPods/Pods-SwiftCocoaPods-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SwiftCocoaPods/Pods-SwiftCocoaPods-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -310,6 +324,7 @@
 /* Begin XCBuildConfiguration section */
 		7F002F28293025FD0073C2A4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7FFF5A8F2FE49BF70078B941 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -373,6 +388,7 @@
 		};
 		7F002F29293025FD0073C2A4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7FFF5A8F2FE49BF70078B941 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -435,8 +451,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftCocoaPods/SwiftCocoaPods.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UL6RU95W7J;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -464,6 +482,7 @@
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jaredornstead.SwiftCocoaPods;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -482,8 +501,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SwiftCocoaPods/SwiftCocoaPods.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = UL6RU95W7J;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				EXCLUDED_ARCHS = "";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -511,6 +532,7 @@
 				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = jaredornstead.SwiftCocoaPods;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

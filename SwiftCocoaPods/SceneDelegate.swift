@@ -28,6 +28,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         guard let windowScene = scene as? UIWindowScene else { return }
 
+        // Capture IDFV and seed the IDFA placeholder before the UI loads so the
+        // Privacy tab shows useful state on its first render. ATT itself is
+        // requested later from sceneDidBecomeActive (the OS only presents the
+        // prompt once the app is in the .active state).
+        Utils.captureDeviceIdentifiers()
+
         let window = UIWindow(windowScene: windowScene)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let rootVC = storyboard.instantiateInitialViewController() else { return }
@@ -70,10 +76,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidBecomeActive(_ scene: UIScene) {
         print(Date(), "-- sceneDidBecomeActive")
-        // ATT must be requested while the app is active. Fire once per session.
+        // ATT must be requested while the application is in the .active state.
+        // Calling in the same runloop as sceneDidBecomeActive can return
+        // .notDetermined immediately without presenting the prompt because the
+        // app state hasn't fully settled yet. A 1s defer is the smallest reliable
+        // workaround. Fire once per session.
         guard !didRequestATT else { return }
         didRequestATT = true
-        Utils.requestTrackingAuthorization()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            Utils.requestTrackingAuthorization()
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) { print(Date(), "-- sceneDidDisconnect") }

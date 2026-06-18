@@ -29,9 +29,9 @@ Reference iOS sample for the [Singular SDK](https://github.com/singular-labs/Sin
    ```
 2. **Create your local secrets file**
    ```bash
-   cp SwiftCocoaPods/Secrets.example.xcconfig SwiftCocoaPods/Secrets.xcconfig
+   cp Secrets.example.xcconfig Secrets.xcconfig
    ```
-   Open `SwiftCocoaPods/Secrets.xcconfig` and replace the placeholders with your own Singular API key and secret from the Singular dashboard. This file is gitignored.
+   Open `Secrets.xcconfig` and replace the placeholders with your own Singular API key and secret from the Singular dashboard. This file is gitignored.
 3. **Wire the xcconfig** (one-time, in Xcode)
    - Open `SwiftCocoaPods.xcworkspace`
    - Select the `SwiftCocoaPods` **project** (not the target) in the navigator
@@ -54,22 +54,24 @@ CocoaPods is in maintenance mode. The Singular iOS SDK is published as a Swift P
 ## Project layout
 
 ```
-SwiftCocoaPods/
-├── AppDelegate.swift        # Lifecycle hooks; defers init to SceneDelegate
-├── SceneDelegate.swift      # Singular.start, deep link routing, ATT
-├── Constants.swift          # Reads API key/secret from Info.plist (xcconfig)
-├── Utils.swift              # ATT request + IDFA/IDFV capture
-├── Info.plist               # Includes NSUserTrackingUsageDescription
-├── PrivacyInfo.xcprivacy    # Required privacy manifest
-├── Secrets.example.xcconfig # Template — copy to Secrets.xcconfig
-└── Controllers/
-    ├── TabController.swift
-    ├── PrivacyController.swift
-    ├── SignInController.swift
-    ├── RevenueController.swift
-    ├── EventsController.swift
-    ├── DeeplinkController.swift
-    └── ReferrerController.swift
+.
+├── Secrets.example.xcconfig # Template — copy to Secrets.xcconfig at repo root
+├── Secrets.xcconfig         # Local-only, gitignored. Holds your API key + secret
+└── SwiftCocoaPods/
+    ├── AppDelegate.swift        # Lifecycle hooks; defers init to SceneDelegate
+    ├── SceneDelegate.swift      # Singular.start, deep link routing, ATT
+    ├── Constants.swift          # Reads API key/secret from Info.plist (xcconfig)
+    ├── Utils.swift              # ATT request + IDFA/IDFV capture
+    ├── Info.plist               # Includes NSUserTrackingUsageDescription
+    ├── PrivacyInfo.xcprivacy    # Required privacy manifest
+    └── Controllers/
+        ├── TabController.swift
+        ├── PrivacyController.swift
+        ├── SignInController.swift
+        ├── RevenueController.swift
+        ├── EventsController.swift
+        ├── DeeplinkController.swift
+        └── ReferrerController.swift
 ```
 
 ## Resources

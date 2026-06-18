@@ -62,8 +62,8 @@ fastlane/test_output
 
 iOSInjectionProject/
 
-# Local secrets — see SwiftCocoaPods/Secrets.example.xcconfig
-SwiftCocoaPods/Secrets.xcconfig
+# Local secrets — see Secrets.example.xcconfig. Matches any depth.
+Secrets.xcconfig
 
 # macOS
 .DS_Store

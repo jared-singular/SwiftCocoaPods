@@ -23,6 +23,9 @@ enum Constants {
     static let NODEEPLINKTEXT = "App did not open with a deep link"
     static let NOTDEFERRED = "Not a deferred deep link"
 
+    static let AWAITING_CONSENT = "Awaiting consent…"
+    static let TRACKING_DECLINED = "Tracking declined"
+
     private static func infoPlistValue(forKey key: String) -> String {
         guard let value = Bundle.main.object(forInfoDictionaryKey: key) as? String,
               !value.isEmpty,

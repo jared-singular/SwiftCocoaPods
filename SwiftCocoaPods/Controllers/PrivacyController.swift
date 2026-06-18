@@ -25,12 +25,24 @@ class PrivacyController: UIViewController {
         dic[ATTRIBUTE_SNG_ATTR_CONTENT_ID] = "0"
         dic[ATTRIBUTE_SNG_ATTR_CONTENT] = "GDPR & CCPA Opt-Out Options"
         Singular.event(EVENT_SNG_CONTENT_VIEW, withArgs: dic)
+
+        // The Privacy tab is the initial tab, so viewWillAppear fires before
+        // ATT resolves and IDFV/IDFA are written. Observe the update notification
+        // so the labels refresh as soon as the values become available.
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refreshIdentifiers),
+            name: Utils.identifiersDidUpdate,
+            object: nil
+        )
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         print(Date(), "-- PrivacyController - viewWillAppear")
-        
-        // Displaying the Identifiers on the PrivacyController
+        refreshIdentifiers()
+    }
+
+    @objc private func refreshIdentifiers() {
         idfvValue.text = UserDefaults.standard.string(forKey: "idfv")
         idfaValue.text = UserDefaults.standard.string(forKey: "idfa")
     }
