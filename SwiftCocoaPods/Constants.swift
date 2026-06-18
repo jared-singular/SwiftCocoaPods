@@ -26,6 +26,11 @@ enum Constants {
     static let AWAITING_CONSENT = "Awaiting consent…"
     static let TRACKING_DECLINED = "Tracking declined"
 
+    static let ATTRIBUTION_NETWORK = "attribution_network"
+    static let ATTRIBUTION_CAMPAIGN_ID = "attribution_campaign_id"
+    static let ATTRIBUTION_CAMPAIGN_NAME = "attribution_campaign_name"
+    static let ATTRIBUTION_CLICK_TIMESTAMP = "attribution_click_timestamp"
+
     private static func infoPlistValue(forKey key: String) -> String {
         guard let value = Bundle.main.object(forInfoDictionaryKey: key) as? String,
               !value.isEmpty,
