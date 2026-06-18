@@ -81,6 +81,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // .notDetermined immediately without presenting the prompt because the
         // app state hasn't fully settled yet. A 1s defer is the smallest reliable
         // workaround. Fire once per session.
+        //
+        // BEST PRACTICE FOR PRODUCTION APPS: Do not request ATT on first launch.
+        // Apple's HIG and opt-in conversion data both favor a contextual prompt
+        // shown after the user has seen value in the app (post-onboarding, after
+        // a custom pre-prompt screen that explains why tracking helps them).
+        // A well-timed prompt with a pre-prompt typically lifts opt-in rates 2-3x
+        // vs. a cold first-launch prompt. This sample fires it eagerly to keep
+        // the SDK integration easy to read — not because eager-on-launch is the
+        // right UX choice.
         guard !didRequestATT else { return }
         didRequestATT = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
