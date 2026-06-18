@@ -10,38 +10,47 @@ import UIKit
 import AppTrackingTransparency
 import AdSupport
 
-class Utils {
-    
+enum Utils {
+
     static func isEmptyOrNull(text: String?) -> Bool {
-        if let text = text, text.count != 0, text.trimmingCharacters(in: .whitespacesAndNewlines).count != 0 {
-            return false
+        guard let text, !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+            return true
         }
-        return true
+        return false
     }
-    
+
+    /// Stores IDFV immediately and requests ATT. IDFA is only captured inside the
+    /// completion handler when the user grants tracking authorization — otherwise
+    /// `advertisingIdentifier` returns all-zeros and is not useful to persist.
+    /// Singular auto-detects the ATT status; this helper just mirrors values to
+    /// UserDefaults so the Privacy tab can display them.
     static func requestTrackingAuthorization() {
-        if #available(iOS 14, *) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3){
-                // call requestTrackingAuthorizationWithCompletionHandler from ATTrackingManager to start the user consent process
-                ATTrackingManager.requestTrackingAuthorization { status in
-                    print(Date(),"-- ATT:",status)
-                    // your authorization handler here
-                    // note: the Singular SDK will automatically detect if authorization has been given and initialize itself
-                }
-                let IDFA = ASIdentifierManager().advertisingIdentifier.uuidString
-                let IDFV = UIDevice().identifierForVendor!.uuidString
-                UserDefaults.standard.set(IDFA, forKey: "idfa")
-                UserDefaults.standard.set(IDFV, forKey: "idfv")
+        let idfv = UIDevice.current.identifierForVendor?.uuidString ?? ""
+        UserDefaults.standard.set(idfv, forKey: "idfv")
+
+        guard #available(iOS 14, *) else { return }
+
+        ATTrackingManager.requestTrackingAuthorization { status in
+            print(Date(), "-- ATT:", status.rawValue)
+
+            let idfa: String
+            switch status {
+            case .authorized:
+                idfa = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+            case .denied, .restricted, .notDetermined:
+                idfa = ""
+            @unknown default:
+                idfa = ""
             }
+            UserDefaults.standard.set(idfa, forKey: "idfa")
         }
     }
-    
-    static func displayMessage(message: String, withView view:UIViewController) {
+
+    static func displayMessage(message: String, withView view: UIViewController) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        view.present(alert, animated: true, completion: nil)
-        let deadlineTime = DispatchTime.now() + .seconds(3)
-        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-            alert.dismiss(animated: true, completion: nil)
+        view.present(alert, animated: true)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            alert.dismiss(animated: true)
         }
     }
 }

@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We use your advertising identifier to measure the effectiveness of marketing campaigns and personalize content. Your data is never sold.</string>
+	<key>SingularApiKey</key>
+	<string>$(SINGULAR_API_KEY)</string>
+	<key>SingularSecret</key>
+	<string>$(SINGULAR_SECRET)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

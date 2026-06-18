@@ -7,15 +7,29 @@
 
 import Foundation
 
-struct Constants {
-    static let APIKEY = "se_team_9b3431b0"
-    static let SECRET = "bcdee06e8490949422c071437da5c5ed"
-    
+enum Constants {
+    /// Singular API key, injected from `Secrets.xcconfig` via Info.plist at build time.
+    /// See `Secrets.example.xcconfig` for setup.
+    static let APIKEY: String = infoPlistValue(forKey: "SingularApiKey")
+
+    /// Singular secret, injected from `Secrets.xcconfig` via Info.plist at build time.
+    static let SECRET: String = infoPlistValue(forKey: "SingularSecret")
+
     static let DEEPLINK = "deeplink"
     static let PASSTHROUGH = "passthrough"
     static let IS_DEFERRED = "is_deferred"
     static let OPENURL = "openurl"
-    
+
     static let NODEEPLINKTEXT = "App did not open with a deep link"
     static let NOTDEFERRED = "Not a deferred deep link"
+
+    private static func infoPlistValue(forKey key: String) -> String {
+        guard let value = Bundle.main.object(forInfoDictionaryKey: key) as? String,
+              !value.isEmpty,
+              !value.hasPrefix("$(") else {
+            assertionFailure("Missing or unresolved Info.plist value for key: \(key). Did you copy Secrets.example.xcconfig to Secrets.xcconfig and wire it as the target's base configuration?")
+            return ""
+        }
+        return value
+    }
 }

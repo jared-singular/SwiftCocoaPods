@@ -1,2 +1,80 @@
 # SwiftCocoaPods
-Sample App using Swift Storyboard with CocoaPods, Singular SDK v12.0.0, Xcode14.1, on iOS16.1
+
+Reference iOS sample for the [Singular SDK](https://github.com/singular-labs/Singular-iOS-SDK). Built with UIKit + storyboards and intended to show, side by side, how to wire up:
+
+- SDK initialization in `SceneDelegate`
+- App Tracking Transparency (ATT) with proper IDFA capture
+- Standard and custom event tracking
+- Standard and custom revenue events
+- Singular Links deep linking (deferred + standard) and custom URL scheme handling
+- Custom user IDs (login flow)
+- GDPR / CCPA opt-outs and `limitDataSharing` / `setLimitAdvertisingIdentifiers`
+- Referrer short-link generation
+- Uninstall tracking via APNs token
+
+## Requirements
+
+| | |
+|---|---|
+| Xcode | 16 or later |
+| iOS deployment target | 16.0+ |
+| Singular SDK | 12.12.x |
+| Dependency manager | CocoaPods (see [SPM migration](#migrating-to-swift-package-manager) below) |
+
+## Setup
+
+1. **Install pods**
+   ```bash
+   pod install
+   ```
+2. **Create your local secrets file**
+   ```bash
+   cp SwiftCocoaPods/Secrets.example.xcconfig SwiftCocoaPods/Secrets.xcconfig
+   ```
+   Open `SwiftCocoaPods/Secrets.xcconfig` and replace the placeholders with your own Singular API key and secret from the Singular dashboard. This file is gitignored.
+3. **Wire the xcconfig** (one-time, in Xcode)
+   - Open `SwiftCocoaPods.xcworkspace`
+   - Select the `SwiftCocoaPods` **project** (not the target) in the navigator
+   - In the **Info** tab, expand **Configurations**
+   - For each configuration (Debug, Release), set the **SwiftCocoaPods target** base configuration to `Secrets.xcconfig`
+4. **Wire the privacy manifest** (one-time, in Xcode)
+   - Drag `SwiftCocoaPods/PrivacyInfo.xcprivacy` into the project navigator
+   - Check the `SwiftCocoaPods` target under **Add to targets**
+5. **Build and run** on a device (ATT and IDFA do not exercise on the simulator).
+
+## Migrating to Swift Package Manager
+
+CocoaPods is in maintenance mode. The Singular iOS SDK is published as a Swift Package and SPM is the recommended path forward:
+
+1. Close the workspace, then run `pod deintegrate` and delete `Podfile`, `Podfile.lock`, the `Pods/` directory, and `SwiftCocoaPods.xcworkspace`.
+2. Open `SwiftCocoaPods.xcodeproj` directly.
+3. **File → Add Package Dependencies…** and add `https://github.com/singular-labs/Singular-iOS-SDK` pinned to `Up to Next Major` from `12.12.0`.
+4. Link `AdServices.framework` to the target as **Optional** (required for Apple Search Ads attribution on iOS 14.3+).
+
+## Project layout
+
+```
+SwiftCocoaPods/
+├── AppDelegate.swift        # Lifecycle hooks; defers init to SceneDelegate
+├── SceneDelegate.swift      # Singular.start, deep link routing, ATT
+├── Constants.swift          # Reads API key/secret from Info.plist (xcconfig)
+├── Utils.swift              # ATT request + IDFA/IDFV capture
+├── Info.plist               # Includes NSUserTrackingUsageDescription
+├── PrivacyInfo.xcprivacy    # Required privacy manifest
+├── Secrets.example.xcconfig # Template — copy to Secrets.xcconfig
+└── Controllers/
+    ├── TabController.swift
+    ├── PrivacyController.swift
+    ├── SignInController.swift
+    ├── RevenueController.swift
+    ├── EventsController.swift
+    ├── DeeplinkController.swift
+    └── ReferrerController.swift
+```
+
+## Resources
+
+- [Singular iOS SDK docs](https://support.singular.net/hc/en-us/articles/360037950591)
+- [Singular iOS SDK GitHub](https://github.com/singular-labs/Singular-iOS-SDK)
+- [Apple ATT documentation](https://developer.apple.com/documentation/apptrackingtransparency)
+- [Apple Privacy Manifest reference](https://developer.apple.com/documentation/bundleresources/privacy_manifest_files)
