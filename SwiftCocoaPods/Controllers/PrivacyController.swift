@@ -15,6 +15,7 @@ class PrivacyController: UIViewController {
     @IBOutlet weak var limited_advid: UISwitch!
     @IBOutlet weak var idfaValue: UILabel!
     @IBOutlet weak var idfvValue: UILabel!
+    @IBOutlet weak var sdidValue: UILabel!
     @IBOutlet weak var shareDeviceInfo: UIButton!
     
     override func viewDidLoad() {
@@ -45,6 +46,7 @@ class PrivacyController: UIViewController {
     @objc private func refreshIdentifiers() {
         idfvValue.text = UserDefaults.standard.string(forKey: "idfv")
         idfaValue.text = UserDefaults.standard.string(forKey: "idfa")
+        sdidValue.text = UserDefaults.standard.string(forKey: Constants.SDID) ?? "—"
     }
     
     @IBAction func gdprToggled(_ sender: Any) {
@@ -110,18 +112,22 @@ class PrivacyController: UIViewController {
     
     
     @IBAction func shareDeviceInfo(_ sender: Any) {
-        let IDFV = UserDefaults.standard.string(forKey: "idfv")
-        let IDFA = UserDefaults.standard.string(forKey: "idfa")
-        if (IDFV != nil || IDFA != nil){
-            print(Date(), "-- Sharing Device Info")
-            let items = [
-                "Device Identifiers:\n\nIDFV: \(String(describing: IDFV))\nIDFA: \(String(describing: IDFA))"
-            ]
-            let shareController = UIActivityViewController(activityItems: items, applicationActivities: nil)
-            shareController.modalPresentationStyle = .popover
-            DispatchQueue.main.async(execute: { [self] in
-                present(shareController, animated: true)
-            })
+        let idfv = UserDefaults.standard.string(forKey: "idfv") ?? "—"
+        let idfa = UserDefaults.standard.string(forKey: "idfa") ?? "—"
+        let sdid = UserDefaults.standard.string(forKey: Constants.SDID) ?? "—"
+
+        print(Date(), "-- Sharing Device Info")
+        let body = """
+        Device Identifiers:
+
+        IDFV: \(idfv)
+        IDFA: \(idfa)
+        SDID: \(sdid)
+        """
+        let shareController = UIActivityViewController(activityItems: [body], applicationActivities: nil)
+        shareController.modalPresentationStyle = .popover
+        DispatchQueue.main.async { [weak self] in
+            self?.present(shareController, animated: true)
         }
     }
     

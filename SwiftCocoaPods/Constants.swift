@@ -31,6 +31,8 @@ enum Constants {
     static let ATTRIBUTION_CAMPAIGN_NAME = "attribution_campaign_name"
     static let ATTRIBUTION_CLICK_TIMESTAMP = "attribution_click_timestamp"
 
+    static let SDID = "sdid"
+
     private static func infoPlistValue(forKey key: String) -> String {
         guard let value = Bundle.main.object(forInfoDictionaryKey: key) as? String,
               !value.isEmpty,

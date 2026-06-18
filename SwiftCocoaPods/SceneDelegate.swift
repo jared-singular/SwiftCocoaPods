@@ -144,6 +144,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             withValue: "2ed20738-059d-42b5-ab80-5aa0c530e3e1",
             overrideExisting: true
         )
+        
+        // OPTIONAL: Singular Device ID (SDID) received callback. Singular emits
+        // an SDID for Enterprise customers who have it enabled. The callback
+        // delivers the value as `String?`, so unwrap before logging or storing.
+        config.sdidReceivedHandler = { sdid in
+            guard let sdid else { return }
+            print(Date(), "-- SDID received:", sdid)
+            UserDefaults.standard.set(sdid, forKey: Constants.SDID)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: Utils.identifiersDidUpdate, object: nil)
+            }
+        }
 
         // OPTIONAL: Session timeout (default is 60s). 120s here for demo purposes.
         Singular.setSessionTimeout(120)
